@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+   body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://images.pexels.com/photos/1037993/pexels-photo-1037993.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    text-align: center;
+    padding: 2rem;
+  }
+  .schedule-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+    color: #333;
+  }
+  #schedule {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .task {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  .greeting {
+    color: #555;
+    font-style: italic;
+    margin-top: 1rem;
+  }
+  #personal-reminder {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  label {
+    font-weight: bold;
+  }
+  input[type="text"] {
+    padding: 4rem;
+    margin: 4rem;
+    border: 10px solid #ccc;
+    border-radius: 5px;
+  }
+  #image-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #custom-image {
+    max-width: 80%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  #current-time {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+<div class="schedule-container">
+  <h1>Farida's Daily Schedule</h1>
+  <p id="current-time"></p>
+  <div id="schedule"></div>
+  <p class="greeting" id="greeting"></p>
+</div>
+<div id="personal-reminder">
+    <h2>Personal Reminder</h2>
+    <label for="reminder">Add your own reminder:</label>
+    <input type="text" id="reminder" placeholder="Enter your reminder">
+    <button id="addReminder">Add Reminder</button>
+</div>
+<div id="image-container">
+  <img src="chiko.jfif" alt="Your Image" id="custom-image">
+</div>
+<script>
+  const scheduleData = [
+    { time: "04:16", task: "Waktu Subuh" },
+    { time: "08:00", task: "Semangat Kerjanya Sayanggg" },
+    { time: "14:00", task: "Makan!!!!" },
+    { time: "17:00", task: "Waktunya pulang" },
+    { time: "17:31", task: "Waktu Maghrib" },
+    { time: "18:41", task: "Waktu Isya"},
+    { time: "19:00", task: "waktunya dapat foto chiko"}
+  ];
+
+  function displaySchedule() {
+    const scheduleContainer = document.getElementById("schedule");
+
+    scheduleData.forEach(item => {
+      const taskElement = document.createElement("div");
+      taskElement.className = "task";
+      taskElement.innerHTML = `<strong>${item.time}</strong><br>${item.task}`;
+      scheduleContainer.appendChild(taskElement);
+    });
+  }
+
+  function displayGreeting() {
+    const greetings = [
+      "Stay positive and focused today!",
+      "You've got this! Keep up the great work.",
+      "Embrace the challenges and make the most of your day."
+    ];
+
+    const greetingElement = document.getElementById("greeting");
+    const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+    greetingElement.textContent = randomGreeting;
+  }
+
+  function updateTime() {
+    const currentTimeElement = document.getElementById("current-time");
+    const currentTime = new Date();
+    const options = { hour: "numeric", minute: "numeric", second: "numeric" };
+    const formattedTime = currentTime.toLocaleTimeString(undefined, options);
+    currentTimeElement.textContent = `Current Time: ${formattedTime}`;
+  }
+
+  displaySchedule();
+  displayGreeting();
+  updateTime();
+  setInterval(updateTime, 1000); // Update time every second
+
+  const addReminderButton = document.getElementById("addReminder");
+  addReminderButton.addEventListener("click", function() {
+    const reminderInput = document.getElementById("reminder");
+    const reminderText = reminderInput.value.trim();
+
+    if (reminderText !== "") {
+      const reminderElement = document.createElement("p");
+      reminderElement.textContent = reminderText;
+      document.getElementById("personal-reminder").appendChild(reminderElement);
+      reminderInput.value = "";
+    }
+  });
+</script>
+</body>
+</html>
